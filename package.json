@@ -1,0 +1,25 @@
+{
+  "name": "bloodbones",
+  "version": "0.0.1",
+  "description": "A versatile tool designed to take screenshots of webpages efficiently.",
+  "main": "bloodbones.js",
+  "scripts": {
+    "start": "node bloodbones.js"
+  },
+  "author": {
+    "name": "madhanmaaz",
+    "url": "git+http://madhanmaaz.netlify.app/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/madhanmaaz/bloodbones"
+  },
+  "license": "MIT",
+  "keywords": [],
+  "dependencies": {
+    "@puppeteer/browsers": "^2.6.1",
+    "ejs": "^3.1.10",
+    "puppeteer-core": "^23.11.1",
+    "yargs": "^17.7.2"
+  }
+}

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= index %> - <%= url %>
+    </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            border: none;
+            box-sizing: border-box;
+            background: none;
+            outline: none;
+            font-family: sans-serif;
+            transition: .5s;
+            text-decoration: none;
+        }
+
+        body {
+            background: #000;
+            height: 100vh;
+            width: 100%;
+            color: #e5e5e5;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+        }
+
+        .header {
+            background: #191919;
+            height: 5vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: .5rem;
+            padding: .5rem;
+            border-bottom: 1px solid #e5e5e57c;
+        }
+
+        .header h4 {
+            text-transform: uppercase;
+            color: #ff3600;
+        }
+
+        .header p {
+            color: aqua;
+        }
+
+        .header button {
+            background: #e5e5e5;
+            font-size: 1.5rem;
+            padding: 0 .5rem;
+        }
+
+        #screen {
+            width: 100%;
+            height: 95vh;
+            object-fit: contain;
+        }
+
+        #headers-container {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            background: #000;
+            width: 90%;
+            height: 100%;
+            font-size: 1.3rem;
+            font-family: monospace, sans-serif;
+            overflow-y: auto;
+            scrollbar-width: thin;
+        }
+
+        #headers-container table {
+            width: 100%;
+            height: 100%;
+            color: #e5e5e5;
+        }
+
+        #headers-container tr,
+        #headers-container td,
+        #headers-container th {
+            padding: .5rem;
+            border: 2px solid #000;
+            text-align: left;
+        }
+
+        #headers-container .th {
+            background: #191919;
+        }
+
+        #headers-container.active {
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <a target="_blank" href="https://github.com/madhanmaaz/bloodbones">
+                <h4>bloodbones</h4>
+                <p>Created by madhanmaaz</p>
+            </a>
+
+            <div>
+                <span>
+                    <%= index %>/<%= length %>
+                </span>
+                <button id="open-prev" data-id="<%= index - 1 <= 0 ? length : index - 1 %>">prev</button>
+                <button id="open-next" data-id="<%- index + 1 > length ? 1 : index + 1 %>">next</button>
+                <button id="open-source-code">SourceCode</button>
+                <button id="open-headers">headers</button>
+            </div>
+        </header>
+
+        <img id="screen" src="../shots/<%= index %>.<%= imgFormat %>" alt="image <%= index %>" data-id="<%= index %>">
+    </div>
+
+    <section id="headers-container">
+        <table>
+            <tr>
+                <td class="th">
+                    IP
+                </td>
+                <td>
+                    <%= ip %>
+                </td>
+            </tr>
+            <% for(const key in headers){ %>
+                <tr>
+                    <td class="th">
+                        <%= key %>
+                    </td>
+                    <td>
+                        <%= headers[key] %>
+                    </td>
+                </tr>
+                <% } %>
+        </table>
+    </section>
+
+    <script>
+        const screenImage = document.querySelector("#screen")
+        const headersContainer = document.querySelector("#headers-container")
+        const openHeaders = document.querySelector("#open-headers")
+        const openNext = document.querySelector("#open-next")
+        const openPrev = document.querySelector("#open-prev")
+        const openSourceCode = document.querySelector("#open-source-code")
+
+        openHeaders.addEventListener("click", () => {
+            headersContainer.classList.toggle("active")
+        })
+
+        openPrev.addEventListener("click", prevImage)
+        openNext.addEventListener("click", nextImage)
+
+        window.addEventListener("keydown", (e) => {
+            if (e.key == "ArrowLeft") {
+                prevImage()
+            }
+
+            if (e.key == "ArrowRight") {
+                nextImage()
+            }
+        })
+
+        function prevImage() {
+            const id = openPrev.getAttribute("data-id")
+            redirect(id)
+        }
+
+        function nextImage() {
+            const id = openNext.getAttribute("data-id")
+            redirect(id)
+        }
+
+        function redirect(id) {
+            location.href = `./${id}.html`
+        }
+
+        openSourceCode.addEventListener("click", () => {
+            const id = screenImage.getAttribute("data-id")
+            location.href = `../src/${id}.txt`
+        })
+    </script>
+</body>
+
+</html>
