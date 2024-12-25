@@ -10,6 +10,7 @@ logger.setLogFile(args.logFile)
 const helpers = require("./utils/helpers")
 const browser = require("./utils/browser")
 
+let doneCount = 1
 let currentUrlIndex = 0
 let successCount = 0
 let failCount = 0
@@ -79,11 +80,11 @@ async function processTask({ page, urls, taskId, reportProps }) {
             )
 
             successCount++
-            logger.log(`[${realIndex}/${urls.length}] - ${url}`)
+            logger.log(`[${doneCount}/${urls.length}] - ${url}`)
         } catch (error) {
             failCount++
             logger.log(
-                `(${realIndex}/${urls.length}) - ${url} - ${error.message}`,
+                `[${doneCount}/${urls.length}] - ${url} - ${error.message}`,
                 logger.LOG_LEVELS.ERROR
             )
             helpers.writeHTML(
@@ -98,6 +99,8 @@ async function processTask({ page, urls, taskId, reportProps }) {
                 }
             )
         }
+
+        doneCount++
     }
 
     await page.close()
