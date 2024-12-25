@@ -101,7 +101,7 @@ module.exports = yargs(hideBin(process.argv))
 
     // Group options for clarity
     .group(["url", "file"], "Input Options:")
-    .group(["threads", "proxy", "resolve", "log-file", "delay", "timeout", "max-retries", "open"], "Settings:")
+    .group(["threads", "proxy", "resolve", "log-file", "delay", "timeout", "open"], "Settings:")
     .group(["browser", "headless", "img-format", "img-quality", "mobile", "landscape", "viewport", "useragent"], "Browser Options:")
     .group(["help", "version"], "General Options:")
 
